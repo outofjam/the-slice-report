@@ -25,7 +25,7 @@ class StoreRatingRequest extends FormRequest
         return [
             'list_id' => ['required', 'uuid', 'exists:lists,id'],
             'price' => ['required', 'numeric', 'min:0'],
-            'rating' => ['required', 'numeric', 'min:0', 'max:10'],
+            'rating' => ['required', 'numeric', 'min:0', 'max:5'],
             'note' => ['nullable', 'string', 'max:1000'],
         ];
     }

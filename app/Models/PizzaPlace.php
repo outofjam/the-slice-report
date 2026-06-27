@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @mixin Builder
  */
-#[Fillable(['google_place_id', 'name', 'address', 'lat', 'lng', 'currency', 'is_active'])]
+#[Fillable(['google_place_id', 'name', 'address', 'lat', 'lng', 'currency', 'google_rating', 'is_active'])]
 class PizzaPlace extends Model
 {
     /** @use HasFactory<PizzaPlaceFactory> */
@@ -37,6 +37,7 @@ class PizzaPlace extends Model
         return [
             'lat' => 'decimal:7',
             'lng' => 'decimal:7',
+            'google_rating' => 'decimal:1',
             'is_active' => 'boolean',
         ];
     }

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class PizzaPlaceService
 {
-    public function addToList(PizzaList $list, User $addedBy, string $googlePlaceId, string $name, ?string $address, ?float $lat, ?float $lng, string $currency): PizzaPlace
+    public function addToList(PizzaList $list, User $addedBy, string $googlePlaceId, string $name, ?string $address, ?float $lat, ?float $lng, string $currency, ?float $googleRating = null): PizzaPlace
     {
         $place = PizzaPlace::firstOrCreate(
             ['google_place_id' => $googlePlaceId],
@@ -19,6 +19,7 @@ class PizzaPlaceService
                 'lat' => $lat,
                 'lng' => $lng,
                 'currency' => strtoupper($currency),
+                'google_rating' => $googleRating,
             ]
         );
 

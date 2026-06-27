@@ -24,9 +24,9 @@ A collaborative web app for tracking pizza spots by price-per-slice vs. perceive
 | Frontend | React + Vite + Tailwind CSS  |
 | Charts   | Recharts                     |
 | Places   | Google Maps Places API       |
-| Backend  | Laravel 11                   |
+| Backend  | Laravel 13                   |
 | Auth     | Laravel Sanctum              |
-| Admin    | Filament 3                   |
+| Admin    | Filament 5                   |
 | Database | PostgreSQL                   |
 | Deploy   | Laravel Forge + DigitalOcean |
 
@@ -46,7 +46,7 @@ slice-report/
 
 ### Prerequisites
 
-- PHP 8.2+
+- PHP 8.5+
 - Composer
 - Node 20+
 - PostgreSQL
@@ -161,14 +161,14 @@ Full API spec: see `slice-report-spec.md`.
 | **High Quality** | 💎 Hidden Gem | ✅ Worth It      |
 | **Low Quality**  | 🚫 Skip It    | 🪤 Tourist Trap |
 
-Default midpoints: **$5.00 / 5.0**
+Default midpoints: **$5.00 / 2.5**
 
 ---
 
 ## Roadmap
 
 - [ ] Map view — plot spots on a city map, coloured by quadrant
-- [ ] The Hype Index — your rating vs. Google/Yelp rating
+- [x] The Hype Index — your rating vs. Google rating
 - [ ] Cross-city comparison with currency conversion
 - [ ] The Holy Grail filter — show only Hidden Gems
 - [ ] Native iOS + Android apps (API is already ready)
@@ -185,29 +185,3 @@ This is a personal project but PRs are welcome. Open an issue first if you're pl
 ## License
 
 MIT
-
-
-Change the rating scale from /10 to /5 across the entire app, and add a Hype Index feature.
-Rating scale change:
-
-Update the rating column validation to accept 0.0–5.0 instead of 0–10
-Update all frontend inputs, labels, and tooltips to reflect /5
-Update the scatter plot Y axis domain to [0, 5]
-Default quadrant midpoint changes from 5.0 to 2.5
-Update any seeded or hardcoded example data
-
-Hype Index:
-
-On the PizzaPlace model, add a google_rating field (decimal, nullable) — populated from the Places API rating field at place creation time. Add it to the fields array in the Autocomplete config: fields: [..., 'rating']
-Add google_rating to the pizza_places migration (nullable decimal)
-Compute hype_index = google_rating - avg_user_rating — derived, not stored
-Expose it in the place ratings API response alongside avg_rating and rating_count
-On the scatter plot, encode Hype Index as dot colour:
-
-Red (overhyped): hype_index > 0.5
-Grey (consensus): -0.5 to 0.5
-Green (underrated): hype_index < -0.5
-
-
-Add Hype Index to the hover tooltip: show Google rating, your avg, and the delta
-In the Filament PizzaPlace resource, add google_rating as a visible column

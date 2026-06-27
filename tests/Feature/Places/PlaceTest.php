@@ -16,16 +16,20 @@ class PlaceTest extends TestCase
     /**
      * @return array<string, mixed>
      */
-    private function placePayload(string $googlePlaceId = 'ChIJabc123'): array
+    /**
+     * @return array<string, mixed>
+     */
+    private function placePayload(string $googlePlaceId = 'ChIJabc123', ?float $googleRating = null): array
     {
-        return [
+        return array_filter([
             'google_place_id' => $googlePlaceId,
             'name' => "Joe's Pizza",
             'address' => '7 Carmine St, New York, NY',
             'lat' => 40.7305,
             'lng' => -74.0027,
             'currency' => 'USD',
-        ];
+            'google_rating' => $googleRating,
+        ], fn ($v) => $v !== null);
     }
 
     private function attach(PizzaList $list, PizzaPlace $place, User $user): void
@@ -70,6 +74,22 @@ class PlaceTest extends TestCase
 
         $this->assertDatabaseHas('pizza_places', ['google_place_id' => 'ChIJabc123']);
         $this->assertDatabaseHas('list_pizza_place', ['list_id' => $list->id]);
+    }
+
+    public function test_store_persists_google_rating(): void
+    {
+        $user = User::factory()->create();
+        $list = PizzaList::factory()->create(['user_id' => $user->id]);
+
+        $this->actingAs($user, 'sanctum')
+            ->postJson("/api/v1/lists/{$list->slug}/places", $this->placePayload('ChIJabc123', 4.2))
+            ->assertStatus(201)
+            ->assertJsonPath('data.google_rating', 4.2);
+
+        $this->assertDatabaseHas('pizza_places', [
+            'google_place_id' => 'ChIJabc123',
+            'google_rating' => 4.2,
+        ]);
     }
 
     public function test_store_reuses_existing_place_by_google_place_id(): void

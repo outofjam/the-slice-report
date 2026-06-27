@@ -50,7 +50,7 @@ class RatingTest extends TestCase
         $this->postJson("/api/v1/places/{$place->google_place_id}/ratings", [
             'list_id' => $list->id,
             'price' => 4.50,
-            'rating' => 8.5,
+            'rating' => 4.5,
         ])->assertUnauthorized();
     }
 
@@ -64,7 +64,7 @@ class RatingTest extends TestCase
             ->postJson("/api/v1/places/{$place->google_place_id}/ratings", [
                 'list_id' => $list->id,
                 'price' => 4.50,
-                'rating' => 8.5,
+                'rating' => 4.5,
             ])->assertForbidden();
     }
 
@@ -78,7 +78,7 @@ class RatingTest extends TestCase
             ->postJson("/api/v1/places/{$place->google_place_id}/ratings", [
                 'list_id' => $list->id,
                 'price' => 4.50,
-                'rating' => 8.5,
+                'rating' => 4.5,
                 'note' => 'Crispy crust, perfect char.',
             ])
             ->assertStatus(201);
@@ -100,7 +100,7 @@ class RatingTest extends TestCase
             'user_id' => $user->id,
             'pizza_place_id' => $place->id,
             'list_id' => $list->id,
-            'rating' => 5.0,
+            'rating' => 3.0,
             'price' => 3.00,
             'currency' => 'USD',
         ]);
@@ -109,7 +109,7 @@ class RatingTest extends TestCase
             ->postJson("/api/v1/places/{$place->google_place_id}/ratings", [
                 'list_id' => $list->id,
                 'price' => 4.50,
-                'rating' => 9.0,
+                'rating' => 4.0,
             ]);
 
         $this->assertDatabaseCount('pizza_ratings', 1);
@@ -129,7 +129,7 @@ class RatingTest extends TestCase
             ->postJson("/api/v1/places/{$place->google_place_id}/ratings", [
                 'list_id' => $list->id,
                 'price' => 4.50,
-                'rating' => 11,
+                'rating' => 6,
             ])->assertUnprocessable()
             ->assertJsonValidationErrors(['rating']);
     }

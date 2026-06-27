@@ -29,6 +29,11 @@ class PizzaPlacesTable
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('currency')
                     ->badge(),
+                TextColumn::make('google_rating')
+                    ->label('Google Rating')
+                    ->numeric(decimalPlaces: 1)
+                    ->placeholder('—')
+                    ->sortable(),
                 TextColumn::make('ratings_count')
                     ->label('Ratings')
                     ->counts('ratings')

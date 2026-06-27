@@ -26,7 +26,7 @@ class PizzaRatingFactory extends Factory
             'list_id' => PizzaList::factory(),
             'price' => fake()->randomFloat(2, 1, 12),
             'currency' => 'USD',
-            'rating' => fake()->randomFloat(1, 0, 10),
+            'rating' => fake()->randomFloat(1, 0, 5),
             'note' => fake()->optional()->sentence(),
             'is_active' => true,
         ];

@@ -29,6 +29,7 @@ class StorePlaceRequest extends FormRequest
             'lat' => ['nullable', 'numeric', 'between:-90,90'],
             'lng' => ['nullable', 'numeric', 'between:-180,180'],
             'currency' => ['required', 'string', 'size:3'],
+            'google_rating' => ['nullable', 'numeric', 'min:0', 'max:5'],
         ];
     }
 }

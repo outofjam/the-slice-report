@@ -32,6 +32,12 @@ class PizzaPlaceForm
                     ->required()
                     ->length(3)
                     ->dehydrateStateUsing(fn (string $state) => strtoupper($state)),
+                TextInput::make('google_rating')
+                    ->label('Google Rating')
+                    ->numeric()
+                    ->minValue(0)
+                    ->maxValue(5)
+                    ->step(0.1),
                 Toggle::make('is_active')
                     ->label('Active')
                     ->default(true),

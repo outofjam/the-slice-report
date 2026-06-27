@@ -41,7 +41,7 @@ class PizzaRatingForm
                     ->required()
                     ->numeric()
                     ->minValue(0)
-                    ->maxValue(10)
+                    ->maxValue(5)
                     ->step(0.1),
                 TextInput::make('note')
                     ->maxLength(1000),

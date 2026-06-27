@@ -29,6 +29,7 @@ class PlaceController extends Controller
             $request->lat,
             $request->lng,
             $request->currency,
+            $request->google_rating,
         );
 
         return $this->created(new PizzaPlaceResource($place));
